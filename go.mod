@@ -1,4 +1,4 @@
-module todos
+module blueprint
 
 go 1.21.6
 

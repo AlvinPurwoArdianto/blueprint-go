@@ -7,8 +7,8 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"todos/controller"
-	"todos/db"
+	"blueprint/controller"
+	"blueprint/db"
 )
 
 func Init() error {

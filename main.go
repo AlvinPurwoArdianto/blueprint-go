@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"todos/routes"
+	"blueprint/routes"
 )
 
 func main() {

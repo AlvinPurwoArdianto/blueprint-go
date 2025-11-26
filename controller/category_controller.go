@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"blueprint/model"
 	"database/sql"
 	"net/http"
-	"todos/model"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo/v4"
