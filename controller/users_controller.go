@@ -20,7 +20,10 @@ func GetAllUsers(db *sqlx.DB) echo.HandlerFunc {
 
 		rows, err := db.Query(query)
 		if err != nil {
-			return err
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": "Terjadi Kesalahan",
+				"error":   err.Error(),
+			})
 		}
 
 		for rows.Next() {
@@ -34,7 +37,10 @@ func GetAllUsers(db *sqlx.DB) echo.HandlerFunc {
 				&user.UpdatedAt,
 			)
 			if err != nil {
-				return err
+				return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+					"message": "Terjadi Kesalahan",
+					"error":   err.Error(),
+				})
 			}
 			users = append(users, user)
 		}
@@ -93,7 +99,10 @@ func CreateUsers(db *sqlx.DB) echo.HandlerFunc {
 
 		err := c.Bind(&req)
 		if err != nil {
-			return err
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Invalid request payload",
+				"error":   err.Error(),
+			})
 		}
 
 		query := `
@@ -115,7 +124,10 @@ func CreateUsers(db *sqlx.DB) echo.HandlerFunc {
 		)
 
 		if err != nil {
-			return err
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": "Terjadi Kesalahan",
+				"error":   err.Error(),
+			})
 		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
@@ -134,7 +146,10 @@ func EditUsers(db *sqlx.DB) echo.HandlerFunc {
 		err := c.Bind(&req)
 
 		if err != nil {
-			return err
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Invalid request payload",
+				"error":   err.Error(),
+			})
 		}
 
 		query := `
@@ -155,7 +170,10 @@ func EditUsers(db *sqlx.DB) echo.HandlerFunc {
 		)
 
 		if err != nil {
-			return err
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": "Terjadi Kesalahan",
+				"error":   err.Error(),
+			})
 		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{

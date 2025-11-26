@@ -20,7 +20,10 @@ func GetAllCategory(db *sqlx.DB) echo.HandlerFunc {
 
 		rows, err := db.Query(query)
 		if err != nil {
-			return err
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": "Terjadi Kesalahan",
+				"error":   err.Error(),
+			})
 		}
 
 		for rows.Next() {
@@ -32,7 +35,10 @@ func GetAllCategory(db *sqlx.DB) echo.HandlerFunc {
 				&category.UpdatedAt,
 			)
 			if err != nil {
-				return err
+				return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+					"message": "Terjadi Kesalahan",
+					"error":   err.Error(),
+				})
 			}
 			categorys = append(categorys, category)
 		}
@@ -87,7 +93,10 @@ func CreateCategory(db *sqlx.DB) echo.HandlerFunc {
 
 		err := c.Bind(&req)
 		if err != nil {
-			return err
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Invalid request payload",
+				"error":   err.Error(),
+			})
 		}
 
 		query := `
@@ -107,7 +116,10 @@ func CreateCategory(db *sqlx.DB) echo.HandlerFunc {
 		)
 
 		if err != nil {
-			return err
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": "Terjadi Kesalahan",
+				"error":   err.Error(),
+			})
 		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
@@ -126,7 +138,10 @@ func EditCategory(db *sqlx.DB) echo.HandlerFunc {
 		err := c.Bind(&req)
 
 		if err != nil {
-			return err
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Invalid request payload",
+				"error":   err.Error(),
+			})
 		}
 
 		query := `
@@ -145,7 +160,10 @@ func EditCategory(db *sqlx.DB) echo.HandlerFunc {
 		)
 
 		if err != nil {
-			return err
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": "Terjadi Kesalahan",
+				"error":   err.Error(),
+			})
 		}
 
 		return c.JSON(http.StatusOK, map[string]interface{}{
@@ -162,7 +180,10 @@ func DeleteCategory(db *sqlx.DB) echo.HandlerFunc {
 		err := c.Bind(&req)
 
 		if err != nil {
-			return err
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Invalid request payload",
+				"error":   err.Error(),
+			})
 		}
 
 		query := `
@@ -189,7 +210,10 @@ func BulkDeleteCategory(db *sqlx.DB) echo.HandlerFunc {
 		err := c.Bind(&req)
 
 		if err != nil {
-			return err
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Invalid request payload",
+				"error":   err.Error(),
+			})
 		}
 
 		for _, Id := range req.Id {
@@ -198,7 +222,10 @@ func BulkDeleteCategory(db *sqlx.DB) echo.HandlerFunc {
 			`
 			_, err = db.Exec(query, Id)
 			if err != nil {
-				return err
+				return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+					"message": "Terjadi Kesalahan",
+					"error":   err.Error(),
+				})
 			}
 		}
 
