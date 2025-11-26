@@ -9,6 +9,6 @@ import (
 func main() {
 	err := routes.Init()
 	if err != nil {
-		log.Fatalf("Error start the server: %s", err)
+		log.Printf("Error start the server: %s", err)
 	}
 }
